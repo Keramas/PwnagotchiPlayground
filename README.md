@@ -8,4 +8,4 @@ Dependencies:
 - cap2hccapx
 - hcxpcaptool
 
-Within thr script, modify path to above binaries accordingly and set SSH key name for SCP.
+Within the script, modify path to above binaries accordingly and set SSH key name for SCP.
