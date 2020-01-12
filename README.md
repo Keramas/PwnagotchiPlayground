@@ -5,7 +5,7 @@ Some scripts for Pwnagotchi
 Extracts all handshake data from Pwnagotchi
 
 Dependencies:
-cap2hccapx
-hcxpcaptool
+- cap2hccapx
+- hcxpcaptool
 
-Modify path accordingly in script and set SSH key name for SCP.
+Within thr script, modify path to above binaries accordingly and set SSH key name for SCP.
