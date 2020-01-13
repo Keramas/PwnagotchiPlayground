@@ -40,6 +40,10 @@ echo "[*] Extracted" $(ls -l handshakes/eapol/*.hccapx | wc -l) "EAPOL hashes."
 echo "[+] Cleaning up pcaps"
 rm *.pcap
 
-echo "[+] Packaging handshakes into zip"
-now=$(date +"%m_%d_%Y")
+echo "[*] Aggregating hashes into single file."
+cat handshakes/eapol/*.hccapx > all_eapol_hashes.hccapx
+cat handshakes/pmkid/*.pmkid > all_pmkid_hashes.pmkid
+
+echo "[+] Packaging all handshakes into zip"
+now=$(date +"%Y_%m_%d-%H-%M-%S")
 zip -r $now.handshakes.zip handshakes/ &> /dev/null
