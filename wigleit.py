@@ -7,14 +7,14 @@ import sys
 import os
 
 wigleURL="https://api.wigle.net/api/v2/network/search?"
-token = "ADD YOUR WIGLE API BASIC AUTH KEY HERE"
+token = "ADD YOUR WIGLE API BASIC AUTH TOKEN"
 
 essid_list = []
 bssid_list = []
 
 def get_args():
     parser = argparse.ArgumentParser(description="Find an AP location with Wigle API", epilog="Wigle it, just a little bit!\n")
-    parser.add_argument('-m', '--mode', type=str, help="Select either 0 or 1. 0 is directory mode, whereas 1 is single query mode.", required=True)
+    parser.add_argument('-m', '--mode', type=int, help="Select either 0 or 1. 0 is directory mode, whereas 1 is single query mode.", required=True)
     parser.add_argument('-hm', '--latmin', type=str, help="", required=True)
     parser.add_argument('-hM', '--latmax', type=str, help="", required=True)
     parser.add_argument('-vm', '--longmin', type=str, help="", required=True)
@@ -25,7 +25,7 @@ def get_args():
 
     args = parser.parse_args()
     mode = args.mode
-    directory = args.mode
+    directory = args.directory
     latmin = args.latmin
     latmax = args.latmax
     longmin = args.longmin
@@ -40,17 +40,22 @@ def parseFiles(directory):
     for file in os.listdir(directory):
         essid = file.split(".")[0].split("_")[0]    
         bssid = file.split(".")[0].split("_")[1]
-        bssid_mac = ':'.join([bssid[i:i+2] for i in range(0, len(bssid), 2)])
+        bssid_mac = '%3A'.join([bssid[i:i+2] for i in range(0, len(bssid), 2)])
         essid_list.append(essid)
-        bssid_list.append(bssid_mac)
+        bssid_list.append(bssid_mac.upper())
 
 
 def search(latmin,latmax,longmin,longmax,essid,bssid):
     headers = {"authorization":"Basic "+token, "Accept":"application/json"}
     query = wigleURL+"latrange1="+latmin+"&latrange2="+latmax+"&longrange1="+longmin+"&longrange2="+longmax+"&ssid="+essid+"&netid="+bssid
+    print(query)
     s = requests.get(query, headers=headers)
-    print(s.content)
-    return s.json() 
+    #print(s.content)
+    if b"too many queries" in s.content:
+        print("[!] Exceeded daily query limit. Exiting...")
+        sys.exit(0)
+    else:
+        return s.json() 
 
 
 def parseResults(results):
@@ -59,7 +64,7 @@ def parseResults(results):
 
     if total == 0:
         print("[-] AP was not found. :(")
-
+        
     else:
         print("[+] AP found. Parsing data...")
 
@@ -78,13 +83,13 @@ def parseResults(results):
 
 
 def main():
-    latmin,latmax,longmin,longmax,essid,bssid,directory,mode = get_args()
+    mode,directory,latmin,latmax,longmin,longmax,essid,bssid = get_args()
 
-    if mode == 0:
+    if mode == 0 and directory != None:
         parseFiles(directory)
         for i in essid_list:
             for j in bssid_list:
-                results = search(latmin,latmax,longmin,longmax,i,j)
+                results = search(latmin,latmax,longmin,longmax,str(i),str(j))
                 parseResults(results)
 
     elif mode == 1:
@@ -92,7 +97,7 @@ def main():
         parseResults(results)
 
     else:
-        print("[!] Mode not selected. Please select either mode 0 or mode 1.")
+        print("[!] Mode not selected or directory not indicated. Please select mode 0 and specify a directory, or select mode 1 and indicate a ESSID and BSSID.")
         sys.exit(0)
 
 
