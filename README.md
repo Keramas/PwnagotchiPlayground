@@ -14,3 +14,8 @@ Within the script, modify path to above binaries accordingly and set SSH key nam
 Uses the WiGLE API to hunt down the exact location of APs discovered by the Pwnagotchi. (A WiGLE API key is required.) 
 
 Feed it the AP name/MAC address and a latitude and longitude range. If located, it will generate a Google Maps link.
+
+### Modes
+- Mode 0: Parses indicated directory of saved PCAP files and performs a search on all of the APs gathered. (Warning: WiGLE API daily limitations may prevent this from finishing.)
+
+- Mode 1: Looks up a single AP based on ESSID and BSSID.
