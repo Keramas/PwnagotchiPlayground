@@ -59,7 +59,6 @@ def parseResults(results):
 
     if total == 0:
         print("[-] AP was not found. :(")
-        sys.exit(0)
 
     else:
         print("[+] AP found. Parsing data...")
