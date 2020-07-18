@@ -1,14 +1,17 @@
 # PwnagotchiPlayground
-Some scripts for Pwnagotchi
+Suite of scripts to make Pwnagotchi data extraction and parsing easier.
 
 ## Get Handshakes
 Extracts all handshake data from Pwnagotchi. Dumps all hashes by type to aggregate file for easy cracking, and also zips all the handshakes to easy to export zip file.
 
 Dependencies:
-- cap2hccapx
-- hcxpcaptool
+- [cap2hccapx](https://hashcat.net/wiki/doku.php?id=hashcat_utils)
+- [hcxpcaptool](https://github.com/ZerBea/hcxtools)
 
-Within the script, modify path to above binaries accordingly and set SSH key name for SCP.
+### How to use
+Within the script, modify the global variables at the top to suppoly proper paths to the above binaries, as well as paths to the SSH key for the Pwnagotchi. Depending on your Linux environment, modification of the regex for determining the Pwnagotchi interface may be required as well. 
+
+Unless the user executing the script has permissions to modify interface settings, sudo execution will be necessary.
 
 ## WiGLE It
 Uses the WiGLE API to hunt down the exact location of APs discovered by the Pwnagotchi. (A WiGLE API key is required.) 
