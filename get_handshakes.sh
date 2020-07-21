@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #Globals to modify:
+
 #-------------------------------------------------------------------------------------------
-#Modify the location and/or SSH keyname for your Pwnagotchi.
+#Modify the location and/or SSH key name for your Pwnagotchi.
 key_path='~/.ssh/pwn.key'
 #Modify regex to include other interface prefixes that are definitely not the Pwnagotchi.
 pwn_interface=$(ip link | awk -F: '$0 !~ "lo|vm|enp|vir|eth0|wl|^[^0-9]"{print $2;getline}')
@@ -10,6 +11,7 @@ pwn_interface=$(ip link | awk -F: '$0 !~ "lo|vm|enp|vir|eth0|wl|^[^0-9]"{print $
 cap2hccapx_path='/opt/hashcat-utils/src/cap2hccapx.bin'
 hcxpcaptool_path='/usr/local/bin/hcxpcaptool'
 #-------------------------------------------------------------------------------------------
+
 echo "[*] Checking for pwnagotchi interface..."
 echo "[+] Found: $pwn_interface"
 echo "[+] Setting IP address for SSH connection..."

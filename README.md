@@ -13,6 +13,8 @@ Within the script, modify the global variables at the top to suppoly proper path
 
 Unless the user executing the script has permissions to modify interface settings, sudo execution will be necessary.
 
+<img src = "images/gethandshakes.png">
+
 ## WiGLE It
 Uses the WiGLE API to hunt down the exact location of APs discovered by the Pwnagotchi. (A WiGLE API key is required.) 
 
